@@ -50,7 +50,7 @@ class ScreenCapture:
         }
 
         self.window_name = window_name
-        self.Exit_key = exit_key
+        self.exit_key = exit_key
         self.img = None
 
     def grab_screen_mss(self, monitor):
@@ -64,32 +64,33 @@ class ScreenCapture:
         return self.img
 
     def run(self):
-        SetForegroundWindow_f = 0  # 判断是否需要置顶窗口
+        global catchImg
+        foreground_window = 0  # 判断是否需要置顶窗口
         while True:
             # 判断是否按下 ctrl+U 窗口始终置顶
             if keyboard.is_pressed('ctrl+U'):
                 while keyboard.is_pressed('ctrl+U'):
                     continue
-                if SetForegroundWindow_f == 0:
-                    SetForegroundWindow_f = 1
+                if foreground_window == 0:
+                    foreground_window = 1
                     time.sleep(1)
                     continue
                 else:
-                    SetForegroundWindow_f = 0
+                    foreground_window = 0
 
             if self.img is None:
-                img = self.grab_screen_mss(self.mointor)
-            # 显示该图片
+                catchImg = self.grab_screen_mss(self.mointor)
+            # 窗口显示该图片
             cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)  # cv2.WINDOW_NORMAL 根据窗口大小设置图片大小
             cv2.resizeWindow(self.window_name, self.RESZIE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT)
-            cv2.imshow(self.window_name, img)
+            cv2.imshow(self.window_name, catchImg)
 
-            if SetForegroundWindow_f == 1:
+            if foreground_window == 1:
                 shell = win32com.client.Dispatch("WScript.Shell")
                 shell.SendKeys('%')
                 win32gui.SetForegroundWindow(win32gui.FindWindow(None, self.window_name))
                 win32gui.ShowWindow(win32gui.FindWindow(None, self.window_name), win32con.SW_SHOW)
 
-            if cv2.waitKey(1) & 0XFF == self.Exit_key:  # 默认：ESC
+            if cv2.waitKey(1) & 0XFF == self.exit_key:  # 默认：ESC
                 cv2.destroyAllWindows()
                 exit("结束")
