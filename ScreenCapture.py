@@ -41,8 +41,8 @@ class ScreenCapture:
         self.GAME_LEFT, self.GAME_TOP = int(0 + self.screen_width // 2 * (1. - self.parser_args.region[0])), int(
             0 + 1080 // 2 * (1. - self.parser_args.region[1]))  # 原点
 
-        self.RESZIE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT = self.screen_width // 4, self.screen_height // 4  # 显示窗口大小
-        self.mointor = {
+        self.RESIZE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT = self.screen_width // 4, self.screen_height // 4  # 显示窗口大小
+        self.monitor = {
             'left': self.GAME_LEFT,
             'top': self.GAME_TOP,
             'width': self.GAME_WIDTH,
@@ -79,10 +79,10 @@ class ScreenCapture:
                     foreground_window = 0
 
             if self.img is None:
-                catchImg = self.grab_screen_mss(self.mointor)
+                catchImg = self.grab_screen_mss(self.monitor)
             # 窗口显示该图片
             cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)  # cv2.WINDOW_NORMAL 根据窗口大小设置图片大小
-            cv2.resizeWindow(self.window_name, self.RESZIE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT)
+            cv2.resizeWindow(self.window_name, self.RESIZE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT)
             cv2.imshow(self.window_name, catchImg)
 
             if foreground_window == 1:
