@@ -68,22 +68,22 @@ class ScreenCapture:
         foreground_window = 0  # 判断是否需要置顶窗口
         while True:
             # 判断是否按下 ctrl+U 窗口始终置顶
-            if keyboard.is_pressed('ctrl+U'):
-                while keyboard.is_pressed('ctrl+U'):
-                    continue
-                if foreground_window == 0:
-                    foreground_window = 1
-                    time.sleep(1)
-                    continue
-                else:
-                    foreground_window = 0
+            # if keyboard.is_pressed('ctrl+U'):
+            #     while keyboard.is_pressed('ctrl+U'):
+            #         continue
+            #     if foreground_window == 0:
+            #         foreground_window = 1
+            #         time.sleep(1)
+            #         continue
+            #     else:
+            #         foreground_window = 0
 
             if self.img is None:
                 catchImg = self.grab_screen_mss(self.monitor)
             # 窗口显示该图片
-            cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)  # cv2.WINDOW_NORMAL 根据窗口大小设置图片大小
-            cv2.resizeWindow(self.window_name, self.RESIZE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT)
-            cv2.imshow(self.window_name, catchImg)
+            # cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)  # cv2.WINDOW_NORMAL 根据窗口大小设置图片大小
+            # cv2.resizeWindow(self.window_name, self.RESIZE_WIN_WIDTH, self.RESIZE_WIN_HEIGHT)
+            # cv2.imshow(self.window_name, catchImg)
 
             if foreground_window == 1:
                 shell = win32com.client.Dispatch("WScript.Shell")
